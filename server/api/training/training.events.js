@@ -1,15 +1,15 @@
 /**
- * Thing model events
+ * Training model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-import Thing from './thing.model';
-var ThingEvents = new EventEmitter();
+import Training from './training.model';
+var TrainingEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-ThingEvents.setMaxListeners(0);
+TrainingEvents.setMaxListeners(0);
 
 // Model events
 var events = {
@@ -21,14 +21,14 @@ var events = {
 for (var e in events) {
   var event = events[e];
   console.log('Register event: ', e)
-  Thing.schema.post(e, emitEvent(event));
+  Training.schema.post(e, emitEvent(event));
 }
 
 function emitEvent(event) {
   return function(doc) {
-    ThingEvents.emit(event + ':' + doc._id, doc);
-    ThingEvents.emit(event, doc);
+    TrainingEvents.emit(event + ':' + doc._id, doc);
+    TrainingEvents.emit(event, doc);
   }
 }
 
-export default ThingEvents;
+export default TrainingEvents;

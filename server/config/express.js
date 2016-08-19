@@ -17,6 +17,7 @@ import lusca from 'lusca';
 import config from './environment';
 import passport from 'passport';
 import session from 'express-session';
+import cookieSession  from 'cookie-session';
 import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 var MongoStore = connectMongo(session);
@@ -43,7 +44,9 @@ export default function(app) {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(methodOverride());
-  app.use(cookieParser());
+  //Consider Cookie Based Session and SessionStore based session
+  app.use(cookieParser('MEANSTACK'));
+  // app.use(cookieSession());//Defaults CookieNameKey: connect.sess CookieSecret: Required is CookieParser is not initialized with one.
   app.use(passport.initialize());
 
   // Persist sessions with MongoStore / sequelizeStore
@@ -55,7 +58,7 @@ export default function(app) {
     resave: false,
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
-      db: 'ngfullstack'
+      db: 'ngfullstack-trng'
     })
   }));
 

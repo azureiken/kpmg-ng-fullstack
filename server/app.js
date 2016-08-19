@@ -73,6 +73,13 @@ require('./routes').default(app);
 // Start server
 function startServer() {
   app.angularFullstack = server.listen(config.port, config.ip, function() {
+    socketio.on('connection', function(socket){
+      socket.emit('info',{hello: 'world'})
+      socket.on('client', function(data){
+        console.log('data in client channel', data)
+      })
+    })
+    console.log('Process.Env.Port is: ', process.env.PORT, 'Other Process.Env K/V ',process.env.cloudant_username)
     console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
   });
 }
